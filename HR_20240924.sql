@@ -1,0 +1,5 @@
+SELECT  * --별표는 (선택해라 전체를)
+FROM TAB;
+
+SELECT *
+FROM EMPLOYEES;
