@@ -109,3 +109,16 @@ FROM DUAL;
 -- 부서 테이블에서 부서 이름의 마지막 글자인 '과' 글자를 제거
 SELECT DNAME, RTRIM(DNAME, '과') 
 FROM DEPARTMENT;
+
+-- 교수 테이블에서 일급 계산(1달은 22일이라고 가정)
+-- 일급 각각 소수점 첫째 자리에서, 소수점 셋째 자리에서 반올림
+-- 일급 각각 소수점 첫째 자리에서, 소수점 셋째 자리에서 절삭
+SELECT SAL, SAL / 22, ROUND(SAL / 22) , ROUND(SAL / 22, 2) 
+FROM PROFESSOR;
+
+SELECT SAL, SAL / 22, TRUNC(SAL / 22) , TRUNC(SAL / 22, 2) 
+FROM PROFESSOR;
+
+-- 10의 자리로 반올림 
+SELECT SAL, SAL / 22, ROUND(SAL / 22, -1) 
+FROM PROFESSOR;
