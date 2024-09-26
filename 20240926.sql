@@ -58,3 +58,18 @@ FROM (
 	FROM STUD_101
 );
 
+-- 학생 테이블에서 이름 순으로 정렬 / 이름, 학년, 전화번호 조회
+SELECT NAME, GRADE , TEL 
+FROM STUDENT
+ORDER BY NAME DESC;
+
+-- 학생 테이블에서 학년을 내림차순으로 정렬 / 이름, 학년, 전화번호 조회
+SELECT NAME, GRADE , TEL 
+FROM STUDENT
+ORDER BY GRADE DESC;
+
+-- 학생 테이블에서 학년을 내림차순으로 정렬 / 이름, 학년, 전화번호 조회
+-- 단, 같은 학년일 경우 이름순으로 정렬
+SELECT NAME, GRADE , TEL 
+FROM STUDENT
+ORDER BY GRADE DESC, NAME ASC;
