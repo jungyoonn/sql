@@ -122,3 +122,48 @@ FROM PROFESSOR;
 -- 10의 자리로 반올림 
 SELECT SAL, SAL / 22, ROUND(SAL / 22, -1) 
 FROM PROFESSOR;
+
+-- 교수 번호 9908 교수님의 입사일, 입사 30일 후, 입사 60일 후의 날짜를 조회
+SELECT HIREDATE , HIREDATE+30, HIREDATE+60
+FROM PROFESSOR
+WHERE PROFNO = '9908';
+
+-- 현재 날짜 조회
+SELECT SYSDATE FROM DUAL;
+
+-- 태어난 지 몇 달 됐는지
+SELECT ROUND(MONTHS_BETWEEN(SYSDATE , '1998/05/02')) A FROM DUAL;
+
+-- 입사한 지 120개월 된 교수들을 조회 / 교수 번호, 입사일, 입사일 + 6개월 후, 입사일부터 현재까지의 개월 계산
+SELECT 
+	PROFNO 
+	, HIREDATE 
+	, ADD_MONTHS(HIREDATE, 6) A
+	, ROUND(MONTHS_BETWEEN(SYSDATE, HIREDATE)) B
+FROM PROFESSOR
+WHERE MONTHS_BETWEEN(SYSDATE, HIREDATE) < 320 ;
+
+-- 오늘이 속한 달의 마지막 날짜, 다가오는 일요일의 날짜 조회
+SELECT 
+	SYSDATE 
+	, LAST_DAY(SYSDATE)
+	, NEXT_DAY(SYSDATE, 1) 
+FROM DUAL;  
+
+-- 오늘을 조회, 반올림, 절삭 처리
+SELECT 
+	SYSDATE-4/24 -- 4시간 전
+	, ROUND(SYSDATE)
+	,TRUNC(SYSDATE)
+FROM DUAL;
+
+-- 오늘을 반올림 / 날짜, 월, 연도, 시, 분으로 반올림
+SELECT 
+	SYSDATE 
+	, ROUND(SYSDATE, 'DD') DAY
+	, ROUND(SYSDATE, 'MM') MONTH
+	, ROUND(SYSDATE, 'YY') YEAR
+	, ROUND(SYSDATE, 'HH') HOUR
+	, ROUND(SYSDATE, 'MI') MINUTE 
+FROM DUAL;
+
