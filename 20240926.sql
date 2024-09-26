@@ -73,3 +73,39 @@ ORDER BY GRADE DESC;
 SELECT NAME, GRADE , TEL 
 FROM STUDENT
 ORDER BY GRADE DESC, NAME ASC;
+
+-- 함수
+-- 학생의 이름, 아이디 조회 / 아이디의 첫 글자는 대문자로, 모든 아이디를 대문자로, 모든 아이디를 소문자로
+SELECT NAME , USERID, INITCAP(USERID), UPPER(USERID), LOWER(USERID) 
+FROM STUDENT;
+
+-- 부서의 이름을 조회하고 이름의 길이와 바이트 수를 조회
+SELECT DNAME , LENGTH(DNAME), LENGTHB(DNAME) 
+FROM DEPARTMENT;
+
+-- 1학년 학생들의 생년월일, 테어난 달을 조회 (주빈번호를 통해서)
+SELECT STUDNO , IDNUM, SUBSTR(IDNUM, 1, 6), SUBSTR(IDNUM, 3, 2) 
+FROM STUDENT
+WHERE GRADE = '1';
+
+-- 부서 테이블에서 부서 이름 조회, 부서 이름 내의 '과' 글자의 위치를 탐색
+SELECT DNAME , INSTR(DNAME, '과', 3, 1) -- 없으면 0을 출력, 3번째 글자에서부터 1번째 '과'의 위치
+FROM DEPARTMENT;
+
+-- 전화번호를 뒷자리 4글자를 *로 바꾸기
+SELECT TEL, REPLACE(TEL, SUBSTR(TEL, -4), '****')
+FROM STUDENT;
+
+SELECT TEL, SUBSTR(TEL, 1, INSTR(TEL, '-')) || '****' AS TEL
+FROM STUDENT; 
+
+-- 교수의 직급 왼쪽에 + 기호를 추가하여 10글자, 아이디의 오른쪽에 *을 추가하여 12글자로 조회
+SELECT POSITION, LPAD(POSITION, 10, '+') , USERID, RPAD(USERID, 12, '*') 
+FROM PROFESSOR;
+
+SELECT 'xyxxyyyyyxy', LTRIM('xyxxyyyyyxy', 'x'), RTRIM('xyxxyyyyyxy', 'y')
+FROM DUAL;
+
+-- 부서 테이블에서 부서 이름의 마지막 글자인 '과' 글자를 제거
+SELECT DNAME, RTRIM(DNAME, '과') 
+FROM DEPARTMENT;
