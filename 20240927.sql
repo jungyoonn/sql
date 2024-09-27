@@ -24,3 +24,40 @@ SELECT
 	TO_NUMBER('1,234', '9,999') + 1111 -- 그냥은 인식을 못하므로 포맷을 해 주어야 함
 FROM DUAL;
 
+-- NVL 함수 : NULL 또는 0을 다른 값으로 변환하기 위한 함수
+-- NVL2 : 첫 번째 인수 값이 NULL이 아니면 두 번째 인수를 출력, NULL이면 세 번째 인수를 출력
+
+-- 학과 번호가
+-- 101 컴퓨터공학과
+-- 102 멀티미디어공학과
+-- 201 전자공학과
+-- 나머지는 기계공학과
+SELECT STUDNO , 
+	NAME , 
+	DEPTNO , 
+	DECODE(DEPTNO, 
+		101, '컴퓨터공학과', 
+		102, '멀티미디어학과',
+		201, '전자공학과',
+		'기계공학과') DNAME
+FROM STUDENT;
+
+-- 교수의 소속 학과에 따라 보너스 지급, 101번 학과일 경우 급여의 10%, 102번 학과는 20%, 201학과는 30%
+SELECT 
+	PROFNO , 
+	NAME, 
+	SAL,
+	DEPTNO,
+	CASE
+		WHEN DEPTNO = 101 THEN SAL * 0.1
+		WHEN DEPTNO = 102 THEN SAL * 0.2
+		WHEN DEPTNO = 201 THEN SAL * 0.3
+		ELSE 0 -- 데이터 타입을 맞춰 주어야 한다
+	END BONUS,
+	CASE DEPTNO -- 가독성 좋게 바꾼 것
+		WHEN 101 THEN SAL * 0.1
+		WHEN 102 THEN SAL * 0.2
+		WHEN 201 THEN SAL * 0.3
+		ELSE 0
+	END BONUS2
+FROM PROFESSOR;
