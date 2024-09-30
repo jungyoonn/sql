@@ -117,3 +117,19 @@ WHERE ROWNUM <= 12
 ) B USING(M)
 ORDER BY 1;
 
+-- SELF JOIN
+-- 부서 테이블에서 부서 이름과 상위 부서 이름을 조회
+SELECT d.DNAME , d2.DNAME
+FROM DEPARTMENT d , DEPARTMENT d2 
+WHERE d.COLLEGE = d2.DEPTNO ;
+
+SELECT d.DNAME || '의 소속은 ' || NVL2(d2.DNAME, d2.DNAME || '입니다', '없습니다')
+FROM DEPARTMENT d 
+LEFT JOIN DEPARTMENT d2 ON d.COLLEGE = d2.DEPTNO ;
+
+-- 학생의 학번, 이름, 담당 교수의 교수 번호, 교수 이름, 학생의 소속 학과 이름을 조회
+-- 단, 모든 학생의 정보를 조회
+SELECT s.STUDNO 학번, s.NAME 이름, s.PROFNO 지도교수, p.NAME 교수이름, d.DNAME 학과 
+FROM STUDENT s 
+NATURAL JOIN DEPARTMENT d 
+LEFT JOIN PROFESSOR p ON s.PROFNO = p.PROFNO;
