@@ -1,0 +1,80 @@
+-- 사용자 아이디가 jun123인 학생과 같은 학년인 학생의 학번, 이름, 학년을 조회
+SELECT STUDNO , NAME , GRADE 
+FROM STUDENT 
+WHERE GRADE = (SELECT GRADE 
+		FROM STUDENT
+		WHERE USERID = 'jun123');
+		
+-- 101번 학과 학생들의 평균 몸무게보다 적은 몸무게를 가진 학생의 학번, 학과 번호, 몸무게를 조회
+SELECT STUDNO , DEPTNO , WEIGHT 
+FROM STUDENT
+WHERE WEIGHT < (SELECT avg(WEIGHT)
+				FROM STUDENT
+				WHERE DEPTNO = '101');
+				
+-- 20101번 학생과 학년은 같고 키는 큰 학생의 이름, 학년, 키를 조회
+SELECT NAME, GRADE, HEIGHT
+FROM STUDENT
+WHERE GRADE = (SELECT GRADE
+				FROM STUDENT
+				WHERE STUDNO = '20101')
+AND HEIGHT > (SELECT HEIGHT
+				FROM STUDENT
+				WHERE STUDNO = '20101');
+			
+-- 정보미디어학부에 소속된 학생의 학번, 이름, 학과 번호 조회
+SELECT STUDNO , NAME, DEPTNO 
+FROM STUDENT 
+WHERE DEPTNO IN (SELECT DEPTNO
+	FROM DEPARTMENT
+	WHERE COLLEGE = (SELECT DEPTNO 
+		FROM DEPARTMENT
+		WHERE DNAME = '정보미디어학부'));
+	
+-- 4학년 학생 중에서 키가 제일 작은 학생보다 큰 모든 학생의 학번, 이름, 키 조회
+SELECT STUDNO , NAME , HEIGHT 
+FROM STUDENT 
+WHERE HEIGHT > ANY (SELECT MIN(HEIGHT)
+					FROM STUDENT
+					WHERE GRADE = 4);	
+
+-- 4학년 학생 중에서 키가 가장 큰 학생보다 큰 모든 학생의 학번, 이름, 키 조회
+SELECT STUDNO , NAME , HEIGHT 
+FROM STUDENT 
+WHERE HEIGHT > ALL (SELECT MAX(HEIGHT)
+					FROM STUDENT
+					WHERE GRADE = 4);	
+					
+-- 보직수당을 받는 교수가 존재한다면 교수 번호, 이름, 급여, 수당, 급여+수당을 조회
+SELECT PROFNO , NAME, SAL, COMM, SAL+NVL(COMM, 0) SALCOM
+FROM PROFESSOR p
+WHERE EXISTS (
+		SELECT *
+		FROM PROFESSOR 
+		WHERE COMM IS NOT NULL);
+		
+-- 학년별 체중이 최소인 학생의 이름, 학년, 체중을 조회 (PAIRWISE)
+SELECT NAME, GRADE, WEIGHT
+FROM STUDENT 
+WHERE (GRADE, WEIGHT) IN (
+	SELECT GRADE, MIN(WEIGHT) 
+	FROM STUDENT
+	GROUP BY GRADE
+);
+
+-- UNPAIRWISE (grade와 최소 몸무게 중 하나라도 만족하면 참이 된다)
+SELECT NAME, GRADE, WEIGHT
+FROM STUDENT 
+WHERE WEIGHT IN (
+	SELECT MIN(WEIGHT) 
+	FROM STUDENT
+	GROUP BY GRADE
+);
+
+-- 학과별 평균 키보다 큰 학생의 이름, 학과 번호, 키 조회
+SELECT *
+FROM STUDENT s
+WHERE HEIGHT > (
+	SELECT AVG(HEIGHT)
+	FROM STUDENT s2
+	WHERE s.DEPTNO = s2.DEPTNO);
