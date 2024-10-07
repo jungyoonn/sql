@@ -122,3 +122,19 @@ WHERE ROWNUM <= 20
 AND RN > 10;
 
 -- 뷰에 대한 무결성 제약 조건은 테이블에 정의된 무결성 제약 조건을 그대로 따라간다
+
+
+-- FILE SYSTEM
+-- FILE의 권한
+
+--			Read	Write	eXecute			0~7까지의 값을 가짐
+-- owner	 1		  1		   1
+-- guest	 0		  0		   0
+-- group	 1		  0		   1
+
+-- 기본값은 chmod 704, 705
+
+-- SYSTEM 계정에서 SAMPLE에게 HR을 조회할 권한 부여 작업 필수
+SELECT * FROM HR.EMPLOYEES;
+
+-- 
