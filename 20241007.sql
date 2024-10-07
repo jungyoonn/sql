@@ -137,4 +137,19 @@ AND RN > 10;
 -- SYSTEM 계정에서 SAMPLE에게 HR을 조회할 권한 부여 작업 필수
 SELECT * FROM HR.EMPLOYEES;
 
--- 
+-- 동의어
+-- ex) DUAL
+SELECT SYSDATE FROM DUAL;
+-- 원래 형태는
+SELECT * FROM SYS.DUAL; 
+
+-- 동의어의 종류
+-- 1. 전용 동의어 : 객체 접근 권한을 부여받은 사용자가 정의한 동의어
+SELECT * FROM HR.EMPLOYEES;
+
+CREATE SYNONYM EMP FOR HR.EMPLOYEES; 
+SELECT * FROM EMP;
+
+-- 2. 공용 동의어 : DBA 권한을 가진 사용자만이 생성 (PUBLIC을 붙임)
+CREATE PUBLIC SYNONYM STU FOR SAMPLE.STUDENT;
+SELECT * FROM STU;
